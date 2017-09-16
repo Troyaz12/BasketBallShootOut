@@ -2,22 +2,23 @@ package com.tegprogramming.basketballshootout;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private BitmapFont font;
-	
+	private Texture img;
+	private Sprite sprite;
 	@Override
 	public void create () {
 
 		batch = new SpriteBatch();
-		font = new BitmapFont();
-		font.setColor(Color.RED);
-		font.getData().scale(5);
+
+		img = new Texture("me.jpg");
+		sprite = new Sprite(img);
 
 	}
 
@@ -28,7 +29,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		batch.begin();
 
-		font.draw(batch,"Hello",100,400);
+		sprite.draw(batch);
 
 
 
@@ -39,6 +40,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		font.dispose();
+		img.dispose();
 	}
 }
