@@ -7,9 +7,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private BitmapFont font;
+	private TextureAtlas explosionAtlas;
+	private Animation animation;
+	private float timePassed =0;
 	private Texture img;
 	private Sprite sprite;
 	@Override
@@ -17,8 +24,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
-		img = new Texture("me.jpg");
-		sprite = new Sprite(img);
+		explosionAtlas = new TextureAtlas(Gdx.files.internal("explosion.atlas"));
+		animation = new Animation(1/10f,explosionAtlas.getRegions());
+
 
 	}
 
@@ -29,8 +37,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		batch.begin();
 
-		sprite.draw(batch);
-
+		timePassed += Gdx.graphics.getDeltaTime();
+		batch.draw((TextureRegion) animation.getKeyFrame(timePassed,true),300,500);
 
 
 
@@ -40,6 +48,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		explosionAtlas.dispose();
 	}
 }
