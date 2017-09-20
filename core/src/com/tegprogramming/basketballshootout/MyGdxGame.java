@@ -2,47 +2,32 @@ package com.tegprogramming.basketballshootout;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.math.Vector2;
+
+public class MyGdxGame extends ApplicationAdapter implements GestureListener {
 	private SpriteBatch batch;
-	private BitmapFont font;
-	private TextureAtlas explosionAtlas;
-	private Animation animation;
-	private float timePassed =0;
-	private Texture img;
-	private int screenWidth;
-	private int screenHeight;
-	private String message = "Touch me";
+	private OrthographicCamera camera;
+	private Texture texture;
 	private Sprite sprite;
-	private static GlyphLayout glyphLayout = new GlyphLayout();
 
 	@Override
 	public void create () {
 
 		batch = new SpriteBatch();
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		texture = new Texture(Gdx.files.internal("Map.png"));
+		sprite = new Sprite(texture);
 
-		screenWidth = Gdx.graphics.getWidth();
-		screenHeight = Gdx.graphics.getHeight();
+		sprite.setPosition(-sprite.getWidth()/2,-sprite.getHeight()/2);
 
-		font = new BitmapFont();
-		font.setColor(com.badlogic.gdx.graphics.Color.GREEN);
-		font.getData().scale(5);
-
-		Gdx.input.setInputProcessor(this);
-
-
-		//explosionAtlas = new TextureAtlas(Gdx.files.internal("explosion.atlas"));
-		//animation = new Animation(1/10f,explosionAtlas.getRegions());
-
-
+		Gdx.input.setInputProcessor(new GestureDetector(this));
 	}
 
 	@Override
@@ -50,78 +35,65 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClearColor(1,1,1,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		glyphLayout.setText(font,message);
-
-		float x = screenWidth/2-glyphLayout.width/2;
-		float y = screenHeight/2+glyphLayout.height/2;
-
+		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
 
-	//	timePassed += Gdx.graphics.getDeltaTime();
-	//	batch.draw((TextureRegion) animation.getKeyFrame(timePassed,true),300,500);
-
-		font.draw(batch,message,x,y);
-
+		sprite.draw(batch);
 
 		batch.end();
 	}
-	
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
+		camera.translate(-deltaX,deltaY);
+		camera.update();
+		return true;
+	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();
-		font.dispose();
-		//explosionAtlas.dispose();
-	}
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
-		message = "Touch down at " +screenX+", "+screenY;
-
-		return true;
+		texture.dispose();
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
-		message = "Touch up at " +screenX+", "+screenY;
-
-
-		return true;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-
-		//message = "Touch down at " +screenX+", "+screenY;
-
-
+	public boolean touchDown(float x, float y, int pointer, int button) {
 		return false;
 	}
 
 	@Override
-	public boolean keyDown(int keycode) {
+	public boolean tap(float x, float y, int count, int button) {
 		return false;
 	}
 
 	@Override
-	public boolean keyUp(int keycode) {
+	public boolean longPress(float x, float y) {
 		return false;
 	}
 
 	@Override
-	public boolean keyTyped(char character) {
+	public boolean fling(float velocityX, float velocityY, int button) {
 		return false;
 	}
 
 
 	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
+	public boolean panStop(float x, float y, int pointer, int button) {
 		return false;
 	}
 
 	@Override
-	public boolean scrolled(int amount) {
+	public boolean zoom(float initialDistance, float distance) {
 		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+		return false;
+	}
+
+	@Override
+	public void pinchStop() {
+
 	}
 }
