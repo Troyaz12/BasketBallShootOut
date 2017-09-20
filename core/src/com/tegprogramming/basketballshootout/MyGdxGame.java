@@ -1,5 +1,6 @@
 package com.tegprogramming.basketballshootout;
 
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -22,8 +23,22 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 		throwSound = Gdx.audio.newSound(Gdx.files.internal("sounds/throw.wav"));
 		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/carnival.wav"));
+		backgroundMusic.play();
+		backgroundMusic.setLooping(true);
+
+	}
+	@Override
+	public void pause() {
+
+		super.pause();
 	}
 
+	@Override
+	public void resume() {
+		backgroundMusic.play();
+
+		super.resume();
+	}
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1,1,1,1);
@@ -62,7 +77,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
 
-		backgroundMusic.play();
+		throwSound.play();
 
 
 		return true;
@@ -70,8 +85,8 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		backgroundMusic.pause();
-		return true;
+
+		return false;
 	}
 
 	@Override
