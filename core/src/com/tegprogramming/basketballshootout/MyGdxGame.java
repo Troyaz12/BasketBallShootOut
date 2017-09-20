@@ -75,16 +75,27 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
+
+		message = "Touch down at " +screenX+", "+screenY;
+
+		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
+
+		message = "Touch up at " +screenX+", "+screenY;
+
+
+		return true;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+
+		//message = "Touch down at " +screenX+", "+screenY;
+
+
 		return false;
 	}
 
