@@ -60,7 +60,10 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		throwSound.play();
+		long soundId = throwSound.play();
+		throwSound.setVolume(soundId,1.5f);  //sets sound clip volume
+		throwSound.setPitch(soundId,2f);
+
 		return true;
 	}
 
