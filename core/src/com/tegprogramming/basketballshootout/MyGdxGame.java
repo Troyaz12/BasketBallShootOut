@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	private SpriteBatch batch;
 	private BitmapFont font;
@@ -21,6 +22,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	private int screenHeight;
 	private String message = "Touch me";
 	private Sprite sprite;
+	private static GlyphLayout glyphLayout = new GlyphLayout();
 
 	@Override
 	public void create () {
@@ -48,13 +50,18 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClearColor(1,1,1,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		
+		glyphLayout.setText(font,message);
+
+		float x = screenWidth/2-glyphLayout.width/2;
+		float y = screenHeight/2+glyphLayout.height/2;
+
 
 		batch.begin();
 
 	//	timePassed += Gdx.graphics.getDeltaTime();
 	//	batch.draw((TextureRegion) animation.getKeyFrame(timePassed,true),300,500);
 
+		font.draw(batch,message,x,y);
 
 
 		batch.end();
