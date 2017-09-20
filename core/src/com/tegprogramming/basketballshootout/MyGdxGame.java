@@ -21,7 +21,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 
 		throwSound = Gdx.audio.newSound(Gdx.files.internal("sounds/throw.wav"));
-		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.wav"));
+		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/carnival.wav"));
 	}
 
 	@Override
@@ -60,16 +60,18 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		long soundId = throwSound.play();
-		throwSound.setVolume(soundId,1.5f);  //sets sound clip volume
-		throwSound.setPitch(soundId,2f);
+
+
+		backgroundMusic.play();
+
 
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
+		backgroundMusic.pause();
+		return true;
 	}
 
 	@Override
