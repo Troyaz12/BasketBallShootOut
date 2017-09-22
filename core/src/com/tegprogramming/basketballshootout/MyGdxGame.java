@@ -7,19 +7,27 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	private SpriteBatch batch;
 	Sound throwSound;
 	Music backgroundMusic;
-
+	private Texture img;
+	private Sprite sprite;
 
 	@Override
 	public void create () {
 
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(this);
+
+		batch = new SpriteBatch();
+
+		img = new Texture("basketball.jpg");
+		sprite = new Sprite(img);
 
 		throwSound = Gdx.audio.newSound(Gdx.files.internal("sounds/throw.wav"));
 		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/carnival.wav"));
@@ -46,6 +54,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 		batch.begin();
 
+		sprite.draw(batch);
 
 		batch.end();
 	}
@@ -55,6 +64,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		throwSound.dispose();
 		backgroundMusic.dispose();
 		batch.dispose();
+		img.dispose();
 
 	}
 
