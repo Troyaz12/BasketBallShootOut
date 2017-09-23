@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -17,6 +18,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	Music backgroundMusic;
 	private Texture img;
 	private Sprite sprite;
+	private static GlyphLayout glyphLayout = new GlyphLayout();
+	private int screenWidth;
+	private int screenHeight;
 
 	@Override
 	public void create () {
@@ -25,6 +29,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 
 		batch = new SpriteBatch();
+
+		screenWidth = Gdx.graphics.getWidth();
+		screenHeight = Gdx.graphics.getHeight();
 
 		img = new Texture("basketball.jpg");
 		sprite = new Sprite(img);
@@ -52,8 +59,17 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClearColor(1,1,1,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+
+		float x = screenWidth-sprite.getWidth();
+		float y = screenHeight/2-sprite.getHeight()/2;
+
+
+
 		batch.begin();
 
+		sprite.setX(x);
+		sprite.setY(y);
 		sprite.draw(batch);
 
 		batch.end();
