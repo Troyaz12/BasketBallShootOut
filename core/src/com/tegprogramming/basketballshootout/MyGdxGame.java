@@ -11,8 +11,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 
-public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
+public class MyGdxGame extends ApplicationAdapter implements InputProcessor, GestureDetector.GestureListener {
 	private SpriteBatch batch;
 	Sound throwSound;
 	Music backgroundMusic;
@@ -21,12 +23,18 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	private static GlyphLayout glyphLayout = new GlyphLayout();
 	private int screenWidth;
 	private int screenHeight;
+	private float x,y;
+	private float volocity =0;
+	private boolean throwBall = false;
+	private float volocityBall = 0;
 
 	@Override
 	public void create () {
 
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(this);
+		GestureDetector input = new GestureDetector(this);
+		Gdx.input.setInputProcessor(input);
 
 		batch = new SpriteBatch();
 
@@ -40,6 +48,11 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/carnival.wav"));
 		backgroundMusic.play();
 		backgroundMusic.setLooping(true);
+
+		x = screenWidth-sprite.getWidth();
+		y = screenHeight/2-sprite.getHeight()/2;
+
+
 
 	}
 	@Override
@@ -60,18 +73,19 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-
-		float x = screenWidth-sprite.getWidth();
-		float y = screenHeight/2-sprite.getHeight()/2;
-
-
-
 		batch.begin();
 
-		sprite.setX(x);
+		if(throwBall==true) {
+			volocity += 55;
+
+		}
+
+		sprite.setX(x- volocity);
 		sprite.setY(y);
 
 		sprite.draw(batch);
+
+
 
 		batch.end();
 	}
@@ -104,10 +118,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
 
-		throwSound.play();
 
 
-		return true;
+		return false;
 	}
 
 	@Override
@@ -129,5 +142,53 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean tap(float x, float y, int count, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean longPress(float x, float y) {
+		return false;
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button) {
+
+		throwBall = true;
+
+		return true;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
+		return false;
+	}
+
+	@Override
+	public boolean panStop(float x, float y, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance) {
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+		return false;
+	}
+
+	@Override
+	public void pinchStop() {
+
 	}
 }
