@@ -33,7 +33,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
 
-		img = new Texture("basketball.jpg");
+		img = new Texture("basketball.png");
 		sprite = new Sprite(img);
 
 		throwSound = Gdx.audio.newSound(Gdx.files.internal("sounds/throw.wav"));
@@ -70,6 +70,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 		sprite.setX(x);
 		sprite.setY(y);
+
 		sprite.draw(batch);
 
 		batch.end();
