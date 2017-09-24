@@ -78,12 +78,22 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 		batch.begin();
 
 		if(throwBall==true) {		//if ball was thrown, move it
-			velocityBallx += 55;
-			velocityBally = velocityBallGlobaly/50;
 
-			sprite.setX(x- velocityBallx);
-			sprite.setY(y- velocityBally);
-			y = y- velocityBally;
+			if(x-velocityBallx>0) {
+				velocityBallx += 55;
+				velocityBally = velocityBallGlobaly / 55;
+
+				sprite.setX(x - velocityBallx);
+				sprite.setY(y - velocityBally);
+				y = y - velocityBally;
+			}else{
+				throwBall=false;
+				y= screenHeight/2-sprite.getHeight()/2;
+				velocityBallx=0;
+				velocityBally=0;
+
+			}
+
 
 		}else{
 			sprite.setX(x- velocityBallx);
