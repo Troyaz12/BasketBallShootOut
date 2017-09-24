@@ -24,7 +24,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 	private int screenWidth;
 	private int screenHeight;
 	private float x,y;
-	private float volocity =0;
+	private float velocityBallx =0;
+	private float velocityBally =0;
+	private float velocityBallGlobaly =0;
 	private boolean throwBall = false;
 	private float volocityBall = 0;
 
@@ -32,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 	public void create () {
 
 		batch = new SpriteBatch();
-		Gdx.input.setInputProcessor(this);
+	//	Gdx.input.setInputProcessor(this);
 		GestureDetector input = new GestureDetector(this);
 		Gdx.input.setInputProcessor(input);
 
@@ -63,7 +65,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 
 	@Override
 	public void resume() {
-		backgroundMusic.play();
+	//	backgroundMusic.play();
 
 		super.resume();
 	}
@@ -75,13 +77,20 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 
 		batch.begin();
 
-		if(throwBall==true) {
-			volocity += 55;
+		if(throwBall==true) {		//if ball was thrown, move it
+			velocityBallx += 55;
+			velocityBally = velocityBallGlobaly/50;
 
+			sprite.setX(x- velocityBallx);
+			sprite.setY(y- velocityBally);
+			y = y- velocityBally;
+
+		}else{
+			sprite.setX(x- velocityBallx);
+			sprite.setY(y- velocityBally);
 		}
 
-		sprite.setX(x- volocity);
-		sprite.setY(y);
+
 
 		sprite.draw(batch);
 
@@ -117,16 +126,14 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-
-
-
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 
-		return false;
+
+		return true;
 	}
 
 	@Override
@@ -162,18 +169,26 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 
-		throwBall = true;
+		throwBall = true;		//ball was just thrown
+		velocityBallGlobaly = velocityY;
 
 		return true;
 	}
 
 	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY) {
+	public boolean pan(float x, float y, float deltaX, float deltaY) {		//find swipe angle
+
+
 		return false;
 	}
 
 	@Override
 	public boolean panStop(float x, float y, int pointer, int button) {
+
+
+
+
+
 		return false;
 	}
 
