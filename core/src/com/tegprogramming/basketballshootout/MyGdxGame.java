@@ -8,7 +8,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
@@ -18,23 +17,22 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 	private SpriteBatch batch;
 	Sound throwSound;
 	Music backgroundMusic;
-	private Texture img;
-	private Sprite sprite;
-	private static GlyphLayout glyphLayout = new GlyphLayout();
+	private Texture basketBallImg;
+	private Texture goalImg;
+	private Sprite ballSprite;
+	private Sprite goalSprite;
 	private int screenWidth;
 	private int screenHeight;
-	private float x,y;
+	private float ballX, ballY, goalX,goalY;
 	private float velocityBallx =0;
 	private float velocityBally =0;
 	private float velocityBallGlobaly =0;
 	private boolean throwBall = false;
-	private float volocityBall = 0;
 
 	@Override
 	public void create () {
 
 		batch = new SpriteBatch();
-	//	Gdx.input.setInputProcessor(this);
 		GestureDetector input = new GestureDetector(this);
 		Gdx.input.setInputProcessor(input);
 
@@ -43,18 +41,24 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
 
-		img = new Texture("basketball.png");
-		sprite = new Sprite(img);
+
+		basketBallImg = new Texture("basketball.png");
+		goalImg = new Texture("basketballGoal.png");
+
+		ballSprite = new Sprite(basketBallImg);
+		goalSprite = new Sprite(goalImg);
+		goalSprite.setRotation(90);
+		goalSprite.setSize(screenWidth/3,screenHeight/3);
 
 		throwSound = Gdx.audio.newSound(Gdx.files.internal("sounds/throw.wav"));
 		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/carnival.wav"));
 		backgroundMusic.play();
 		backgroundMusic.setLooping(true);
 
-		x = screenWidth-sprite.getWidth();
-		y = screenHeight/2-sprite.getHeight()/2;
-
-
+		ballX = screenWidth- ballSprite.getWidth();
+		ballY = screenHeight/2- ballSprite.getHeight()/2;
+		goalX = screenWidth - goalSprite.getWidth();
+		goalY = screenHeight-goalSprite.getHeight();
 
 	}
 	@Override
@@ -79,32 +83,29 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 
 		if(throwBall==true) {		//if ball was thrown, move it
 
-			if(x-velocityBallx>0) {
+			if(ballX -velocityBallx>0) {
 				velocityBallx += 55;
 				velocityBally = velocityBallGlobaly / 55;
 
-				sprite.setX(x - velocityBallx);
-				sprite.setY(y - velocityBally);
-				y = y - velocityBally;
+				ballSprite.setX(ballX - velocityBallx);
+				ballSprite.setY(ballY - velocityBally);
+				ballY = ballY - velocityBally;
 			}else{
 				throwBall=false;
-				y= screenHeight/2-sprite.getHeight()/2;
+				ballY = screenHeight/2- ballSprite.getHeight()/2;
 				velocityBallx=0;
 				velocityBally=0;
 
 			}
 
 
-		}else{
-			sprite.setX(x- velocityBallx);
-			sprite.setY(y- velocityBally);
+		}else{			//ball was not thrown, ball remains in place
+			ballSprite.setX(ballX - velocityBallx);
+			ballSprite.setY(ballY - velocityBally);
 		}
 
-
-
-		sprite.draw(batch);
-
-
+		ballSprite.draw(batch);
+		goalSprite.draw(batch);
 
 		batch.end();
 	}
@@ -114,7 +115,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 		throwSound.dispose();
 		backgroundMusic.dispose();
 		batch.dispose();
-		img.dispose();
+		basketBallImg.dispose();
 
 	}
 
