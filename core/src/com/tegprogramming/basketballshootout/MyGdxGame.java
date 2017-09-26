@@ -47,8 +47,8 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 
 		ballSprite = new Sprite(basketBallImg);
 		goalSprite = new Sprite(goalImg);
-		goalSprite.setRotation(90);
-		goalSprite.setSize(screenWidth/3,screenHeight/3);
+		goalSprite.setRotation(90);			//rotate image 90 degrees
+		goalSprite.setSize(screenWidth/4,screenHeight/4);  //change size of the image according to screen size
 
 		throwSound = Gdx.audio.newSound(Gdx.files.internal("sounds/throw.wav"));
 		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/carnival.wav"));
@@ -57,8 +57,8 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 
 		ballX = screenWidth- ballSprite.getWidth();
 		ballY = screenHeight/2- ballSprite.getHeight()/2;
-		goalX = screenWidth - goalSprite.getWidth();
-		goalY = screenHeight-goalSprite.getHeight();
+		goalX = 0-screenWidth/3;
+		goalY = screenHeight/4- goalSprite.getHeight()/4;
 
 	}
 	@Override
@@ -80,6 +80,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 
 
 		batch.begin();
+
+		goalSprite.setX(goalX);
+		goalSprite.setY(goalY);
 
 		if(throwBall==true) {		//if ball was thrown, move it
 
@@ -114,8 +117,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 	public void dispose () {
 		throwSound.dispose();
 		backgroundMusic.dispose();
-		batch.dispose();
 		basketBallImg.dispose();
+		goalImg.dispose();
+		batch.dispose();
 
 	}
 
