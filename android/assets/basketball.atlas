@@ -1,0 +1,55 @@
+
+basketball.png
+size: 2048,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+unnamed1
+  rotate: false
+  xy: 959, 110
+  size: 239, 237
+  orig: 239, 237
+  offset: 0, 0
+  index: -1
+unnamed7
+  rotate: false
+  xy: 959, 110
+  size: 239, 237
+  orig: 239, 237
+  offset: 0, 0
+  index: -1
+unnamed2
+  rotate: false
+  xy: 669, 61
+  size: 288, 286
+  orig: 288, 286
+  offset: 0, 0
+  index: -1
+unnamed6
+  rotate: false
+  xy: 669, 61
+  size: 288, 286
+  orig: 288, 286
+  offset: 0, 0
+  index: -1
+unnamed3
+  rotate: false
+  xy: 351, 33
+  size: 316, 314
+  orig: 316, 314
+  offset: 0, 0
+  index: -1
+unnamed5
+  rotate: false
+  xy: 351, 33
+  size: 316, 314
+  orig: 316, 314
+  offset: 0, 0
+  index: -1
+unnamed4
+  rotate: false
+  xy: 2, 2
+  size: 347, 345
+  orig: 347, 345
+  offset: 0, 0
+  index: -1

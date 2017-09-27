@@ -8,8 +8,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 
@@ -28,6 +31,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 	private float velocityBally =0;
 	private float velocityBallGlobaly =0;
 	private boolean throwBall = false;
+	private TextureAtlas basketballSpin;
+	private Animation animation;
+	private float timePassed=0;
 
 	@Override
 	public void create () {
@@ -59,6 +65,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 		ballY = screenHeight/2- ballSprite.getHeight()/2;
 		goalX = 0-screenWidth/3;
 		goalY = screenHeight/4- goalSprite.getHeight()/4;
+
+		basketballSpin = new TextureAtlas(Gdx.files.internal("basketball.atlas"));
+		animation = new Animation(1/10f,basketballSpin.getRegions());
 
 	}
 	@Override
@@ -107,7 +116,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 			ballSprite.setY(ballY - velocityBally);
 		}
 
-		ballSprite.draw(batch);
+		//ballSprite.draw(batch);
+		timePassed += Gdx.graphics.getDeltaTime();
+		batch.draw((TextureRegion) animation.getKeyFrame(timePassed,true),300,500);
 		goalSprite.draw(batch);
 
 		batch.end();
@@ -119,6 +130,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor, Ges
 		backgroundMusic.dispose();
 		basketBallImg.dispose();
 		goalImg.dispose();
+		basketballSpin.dispose();
 		batch.dispose();
 
 	}
